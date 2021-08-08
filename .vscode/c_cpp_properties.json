@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "~/ros2_galactic/**",
+                "/usr/include/**",
+                "~/dev_ws_galactic/**"
+            ],
+            "name": "ROS"
+        }
+    ],
+    "version": 4
+}
