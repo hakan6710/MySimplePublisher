@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(testPublisher)
+project(test_publisher)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -13,15 +13,17 @@ find_package(OpenCV REQUIRED )
 find_package(ament_index_cpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
+
+
+
 include_directories(
         include
-        ${adp_core_msgs_INCLUDE_DIRS}
 )
 
 
 add_executable(my_publisher src/publisher_node.cpp)
 ament_target_dependencies(my_publisher 
-rclcpp std_msgs "adp_core_msgs")
+rclcpp std_msgs adp_core_msgs)
 
 
 install(TARGETS my_publisher DESTINATION lib/${PROJECT_NAME} )

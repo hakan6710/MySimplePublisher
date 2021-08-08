@@ -5,7 +5,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
-#include "adp_core_msgs"
+#include  "adp_core_msgs/msg/objects/ObjectStamped.hpp" 
 
 using namespace std::chrono_literals;
 
