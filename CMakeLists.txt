@@ -7,26 +7,20 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(adp_core_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(OpenCV REQUIRED )
-find_package(ament_index_cpp REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(tutorial_interfaces REQUIRED)                      # CHANGE
+
+add_executable(talker src/publisher_node.cpp)
+ament_target_dependencies(talker rclcpp tutorial_interfaces)    # CHANGE
+
+
+install(TARGETS
+  talker
+  DESTINATION lib/${PROJECT_NAME})
 
 
 
 
-include_directories(
-        include
-)
-
-
-add_executable(my_publisher src/publisher_node.cpp)
-ament_target_dependencies(my_publisher 
-rclcpp std_msgs adp_core_msgs)
-
-
-install(TARGETS my_publisher DESTINATION lib/${PROJECT_NAME} )
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
