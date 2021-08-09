@@ -8,7 +8,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(ament_index_cpp REQUIRED)
-find_package(adp_core_msgs_test REQUIRED)
+find_package(adp_core_msgs REQUIRED)
 
 find_package(rclcpp REQUIRED)
 find_package(OpenCV REQUIRED )
@@ -28,7 +28,7 @@ include_directories(
   ${class_loader_INCLUDE_DIRS}
   ${rmw_implementation_INCLUDE_DIRS}
   ${std_msgs_INCLUDE_DIRS}
-  ${adp_core_msg_test_INCLUDE_DIRS}
+  ${adp_core_msg_INCLUDE_DIRS}
 
 )
 
@@ -38,7 +38,7 @@ ament_target_dependencies(my_publisher
 "rclcpp" 
 "std_msgs" 
 "tutorial_interfaces" 
-"adp_core_msgs_test"
+"adp_core_msgs"
 "class_loader"
 "rclcpp_components"
 
@@ -48,7 +48,7 @@ target_link_libraries(my_publisher
   ${rclcpp_LIBRARIES}
   ${OpenCV_LIBRARIES}
   ${ament_index_cpp_LIBRARIES}
-  ${adp_core_msgs_test}
+  ${adp_core_msgs}
   ${std_msgs_LIBRARIES}
 )
 

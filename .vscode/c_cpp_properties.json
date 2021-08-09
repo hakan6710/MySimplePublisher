@@ -6,9 +6,9 @@
                 "limitSymbolsToIncludedHeaders": true
             },
             "includePath": [
+                "~/dev_ws_galactic/**",
                 "~/ros2_galactic/**",
-                "/usr/include/**",
-                "~/dev_ws_galactic/**"
+                "/usr/include/**"
             ],
             "name": "ROS"
         }

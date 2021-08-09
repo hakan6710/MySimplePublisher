@@ -9,7 +9,6 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <depend>adp_core_msgs_test</depend>
   <depend>adp_core_msgs</depend>
   <depend>rclcpp</depend>
   <depend>std_msgs</depend>

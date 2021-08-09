@@ -6,10 +6,9 @@
 #include "std_msgs/msg/string.hpp"
 
 //So funktioniert include
-#include "adp_core_msgs_test/msg/objectstamped.hpp"
+#include "adp_core_msgs/msg/object_array_stamped.hpp"
 
-//funktioniert nicht, weil ObjectStamped
-//#include "adp_core_msgs/msg/objectStamped.hpp"
+
 using namespace std::chrono_literals;
 
 using namespace std::chrono_literals;
@@ -24,8 +23,9 @@ class MinimalPublisher : public rclcpp::Node
     : Node("minimal_publisher"), count_(0)
     {
       
-      publisher_ = this->create_publisher<adp_core_msgs_test::msg::Objectstamped>("meineStringsAlda", 10);
-      
+      publisher_ = this->create_publisher<adp_core_msgs::msg::ObjectArrayStamped>("meineStringsAlda", 10);
+      timer_ = this->create_wall_timer(
+      500ms, std::bind(&MinimalPublisher::timer_callback, this));
     }
 
 
@@ -34,16 +34,92 @@ class MinimalPublisher : public rclcpp::Node
     rclcpp::TimerBase::SharedPtr timer_;
    
 
-    std::shared_ptr<rclcpp::Publisher<adp_core_msgs_test::msg::Objectstamped>> publisher_;
+    std::shared_ptr<rclcpp::Publisher<adp_core_msgs::msg::ObjectArrayStamped>> publisher_;
     size_t count_;
   
-    void timer_callback()
+    void timer_callback_temp()
     {
-      //auto test=adp_core_msgs::ObjectStamped();
-      auto message= adp_core_msgs_test::msg::Objectstamped();
-      message.motion_model=2;
+      
+      adp_core_msgs::msg::ObjectArrayStamped message;
+      adp_core_msgs::msg::ObjectStamped objectStamped;
+      int numberOfObjects=0;
+
+      //ObjectStamped
+      int sensorIndex=1;
+      int objectIndex=1;
+      int motion_model=1;
+      adp_core_msgs::msg::MeasurementVector measurementVector;
+      measurementVector.x=0;
+      measurementVector.y=0;
+      measurementVector.z=0;
+
+      measurementVector.vx=0;
+      measurementVector.vy=0;
+      measurementVector.vz=0;
+
+      measurementVector.ax=1;
+      measurementVector.ay=1;
+      measurementVector.az=1;
+      measurementVector.orientation=0;
+      
+      adp_core_msgs::msg::MeasurementNoise measurementNoise;
+
+      measurementNoise.x_rms=1;
+      measurementNoise.y_rms=1;
+      measurementNoise.z_rms=1;
+      measurementNoise.vx_rms=1;
+      measurementNoise.vy_rms=1;
+      measurementNoise.vz_rms=1;
+      measurementNoise.ax_rms=1;
+      measurementNoise.ay_rms=1;
+      measurementNoise.az_rms=1;
+      measurementNoise.orientation_rms=1;
+
+
+
+      adp_core_msgs::msg::MeasurementParameters measurementParameters;
+      measurementParameters.origin_x=1;
+      measurementParameters.origin_y=1;
+      measurementParameters.origin_z=1;
+      measurementParameters.orientation_x=1;
+      measurementParameters.orientation_y=1;
+      measurementParameters.orientation_z=1;
+      measurementParameters.frame=1;
+
+
+      adp_core_msgs::msg::ObjectAttributes objectAttributes;
+      objectAttributes.dynamic_type=1;
+      objectAttributes.object_class=1;
+      objectAttributes.object_class_confidence=1;
+      objectAttributes.object_length=1;
+      objectAttributes.object_width=1;
+
+      
+      objectStamped.measurement_noise=measurementNoise;
+      objectStamped.measurement_parameters=measurementParameters;
+      objectStamped.measurement_vector=measurementVector;
+      objectStamped.object_attributes=objectAttributes;
+
+      message.objects[0]=objectStamped;
+      
+     
       RCLCPP_INFO(this->get_logger(), "I am Logging");
       publisher_->publish(message);
+    }
+
+    void timer_callback()
+    {
+      
+      
+      
+     
+      // RCLCPP_INFO(this->get_logger(), "I am Logging");
+      // publisher_->publish(message);
+    }
+    adp_core_msgs::msg::ObjectArrayStamped getADP(){
+
+
+
     }
     
 };

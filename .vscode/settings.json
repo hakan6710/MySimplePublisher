@@ -79,7 +79,6 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "valarray": "cpp",
-        "variant": "cpp",
-        "adp_core_msgs": "cpp"
+        "variant": "cpp"
     }
 }
