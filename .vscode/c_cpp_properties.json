@@ -10,7 +10,8 @@
                 "~/ros2_galactic/**",
                 "/usr/include/**"
             ],
-            "name": "ROS"
+            "name": "ROS",
+            "compileCommands": "/home/fze2/ros2_galactic/build/uncrustify_vendor/uncrustify-45b836cff040594994d364ad6fd3f04adc890a26-prefix/src/uncrustify-45b836cff040594994d364ad6fd3f04adc890a26-build/compile_commands.json"
         }
     ],
     "version": 4

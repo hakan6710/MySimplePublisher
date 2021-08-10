@@ -17,6 +17,10 @@ find_package(std_msgs REQUIRED)
 find_package(tutorial_interfaces REQUIRED) 
 find_package(class_loader REQUIRED)
 find_package(rclcpp_components REQUIRED)
+find_package(sensor_msgs REQUIRED )
+find_package(OpenCV REQUIRED)
+find_package(Boost REQUIRED)
+find_package(cv_bridge REQUIRED)
 
 include_directories(
         include
@@ -28,21 +32,31 @@ include_directories(
   ${class_loader_INCLUDE_DIRS}
   ${rmw_implementation_INCLUDE_DIRS}
   ${std_msgs_INCLUDE_DIRS}
+  ${sensor_msgs_INCLUDE_DIRS}
   ${adp_core_msg_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
+  ${cv_bridge_INCLUDE_DIRS}
 
 )
 
 
 add_executable(my_publisher src/publisher_node.cpp)
 ament_target_dependencies(my_publisher 
+cv_bridge
 "rclcpp" 
 "std_msgs" 
 "tutorial_interfaces" 
 "adp_core_msgs"
 "class_loader"
 "rclcpp_components"
-
+"sensor_msgs"
+"OpenCV"
 )
+
+
+
+
 
 target_link_libraries(my_publisher
   ${rclcpp_LIBRARIES}
@@ -50,6 +64,10 @@ target_link_libraries(my_publisher
   ${ament_index_cpp_LIBRARIES}
   ${adp_core_msgs}
   ${std_msgs_LIBRARIES}
+  ${sensor_msgs_LIBRARIES}
+  ${OpenCV_LIBS}
+  ${Boost_LIBS}
+  ${cv_bridge_LIBRARIES}
 )
 
 
@@ -70,6 +88,52 @@ install(
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
 )
+
+
+
+##MY PBUSLIERH COP
+add_executable(my_publisher2 src/publisher_node_copy.cpp)
+ament_target_dependencies(my_publisher2 
+cv_bridge
+"rclcpp" 
+"std_msgs" 
+"tutorial_interfaces" 
+"adp_core_msgs"
+"class_loader"
+"rclcpp_components"
+"sensor_msgs"
+"OpenCV"
+)
+
+
+
+
+
+target_link_libraries(my_publisher2
+  ${rclcpp_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+  ${ament_index_cpp_LIBRARIES}
+  ${adp_core_msgs}
+  ${std_msgs_LIBRARIES}
+  ${sensor_msgs_LIBRARIES}
+  ${OpenCV_LIBS}
+  ${Boost_LIBS}
+  ${cv_bridge_LIBRARIES}
+)
+
+
+
+
+
+install(TARGETS my_publisher2 DESTINATION lib/${PROJECT_NAME} )
+
+install(
+    TARGETS my_publisher2
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin
+)
+
 
 
 if(BUILD_TESTING)
