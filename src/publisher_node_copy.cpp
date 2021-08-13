@@ -33,7 +33,7 @@ class MinimalPublisher : public rclcpp::Node
     {
       
 
-      image_sub = this->create_subscription<sensor_msgs::msg::CompressedImage>("meineBilderAlda", 10, std::bind(&MinimalPublisher::timer_callback, this, _1));
+      image_sub = this->create_subscription<sensor_msgs::msg::CompressedImage>("meineBilder", 10, std::bind(&MinimalPublisher::timer_callback, this, _1));
      
       
     }
@@ -62,7 +62,7 @@ class MinimalPublisher : public rclcpp::Node
 
       //(memcpy(&img_msg_compressed.data[0], currentFrame.data, compressed_size);
      
-      RCLCPP_INFO(this->get_logger(), "lol ist rdy?");
+      RCLCPP_INFO(this->get_logger(), "rdy!");
     }
     rclcpp::Subscription<sensor_msgs::msg::CompressedImage >::SharedPtr image_sub;  
     adp_core_msgs::msg::ObjectArrayStamped getADP(){

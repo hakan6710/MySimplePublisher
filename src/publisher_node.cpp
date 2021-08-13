@@ -16,9 +16,12 @@
 #include <cv_bridge/cv_bridge.h>
 //#include "../include/cv_bridge_galactic.hpp"
 
-using namespace std::chrono_literals;
+#include <thread>
+
+
 
 using namespace std::chrono_literals;
+using namespace std;
 
 /* This example creates a subclass of Node and uses std::bind() to register a
 * member function as a callback from the timer. */
@@ -32,10 +35,9 @@ class MinimalPublisher : public rclcpp::Node
     : Node("minimal_publisher"), count_(0)
     {
       
-      publisher_ = this->create_publisher<adp_core_msgs::msg::ObjectArrayStamped>("meineStringsAlda", 10);
-      pub_jpg = this->create_publisher<sensor_msgs::msg::CompressedImage>("meineBilderAlda", 100);
-      timer_ = this->create_wall_timer(
-      500ms, std::bind(&MinimalPublisher::timer_callback, this));
+      publisher_ = this->create_publisher<adp_core_msgs::msg::ObjectArrayStamped>("meineStrings", 10);
+      pub_jpg = this->create_publisher<sensor_msgs::msg::CompressedImage>("meineBilder", 100);
+      loop();
     }
 
 
@@ -120,30 +122,55 @@ class MinimalPublisher : public rclcpp::Node
     //   publisher_->publish(message);
     // }
 
-    void timer_callback()
+     map<int, string> getFilePathes(string directory)
     {
-      cv::Mat currentFrame;
-      sensor_msgs::msg::CompressedImage img_msg_compressed;  
-      std::string image_path="/home/fze2/Desktop/kitti_data/testing/image_02/0000/000000.png";
-      int colorReadCode=1;
-      currentFrame = cv::imread(image_path, colorReadCode);
-      std_msgs::msg::Header myHeader;
+        map<int, string> map1;
+        int number_of_zeros=6;
+    
+      string original_string=to_string(42);
+      std::string dest = std::string( number_of_zeros, '0').append( original_string);
 
-      
+      for(int i=0; i<1000; i++){
+            
+        string original_string=to_string(i);
+        std::string dest = std::string( number_of_zeros-original_string.size(), '0').append( original_string);
 
-      cv_bridge::CvImage myImage(myHeader,"bgr8",currentFrame);
-      
-      myImage.toCompressedImageMsg(img_msg_compressed);
-      //cv::imencode("." + format, image, img_msg_compressed.data);
-      
-      //(memcpy(&img_msg_compressed.data[0], currentFrame.data, compressed_size);
-     
-      // RCLCPP_INFO(this->get_logger(), "I am Logging");
-      pub_jpg->publish(img_msg_compressed);
+
+            string filepath=directory+dest+".png";
+
+            if (FILE *file = fopen(filepath.c_str(), "r")) 
+            {
+                fclose(file);
+                map1.insert(std::pair<int, string>(i,filepath));
+                
+            }else {break;}
+            
+            
+      }
+
+        return map1;
     }
+    void loop()
+    {
+      
+      auto mapWithFileNames=getFilePathes("/home/fze2/Desktop/kitti_data/testing/image_02/0000/");
+		  for(auto i2:mapWithFileNames){
+        cv::Mat currentFrame;
+        sensor_msgs::msg::CompressedImage img_msg_compressed;  
+        int colorReadCode=1;
+        currentFrame = cv::imread(i2.second, colorReadCode);
+        std_msgs::msg::Header myHeader;
+        cv_bridge::CvImage myImage(myHeader,"bgr8",currentFrame);
+        myImage.toCompressedImageMsg(img_msg_compressed);
+        pub_jpg->publish(img_msg_compressed);
+        RCLCPP_INFO(get_logger(), "Publishing and Waiting for 1sec now.!");
+        std::this_thread::sleep_for(1s);
+
+      }
+    }
+
+
     adp_core_msgs::msg::ObjectArrayStamped getADP(){
-
-
 
     }
     
