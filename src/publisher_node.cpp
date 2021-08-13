@@ -131,7 +131,7 @@ class MinimalPublisher : public rclcpp::Node
       std::string dest = std::string( number_of_zeros, '0').append( original_string);
 
       for(int i=0; i<1000; i++){
-            
+        
         string original_string=to_string(i);
         std::string dest = std::string( number_of_zeros-original_string.size(), '0').append( original_string);
 
@@ -155,6 +155,12 @@ class MinimalPublisher : public rclcpp::Node
       
       auto mapWithFileNames=getFilePathes("/home/fze2/Desktop/kitti_data/testing/image_02/0000/");
 		  for(auto i2:mapWithFileNames){
+        
+        //Führt zu seiner Exception. Nicht der gewünschte Weg aber das gewünschte Ergebnis.
+        if(!rclcpp::ok()){
+            cout<<"breche ab";
+            break;
+        }
         cv::Mat currentFrame;
         sensor_msgs::msg::CompressedImage img_msg_compressed;  
         int colorReadCode=1;
