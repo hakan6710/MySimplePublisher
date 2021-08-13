@@ -60,6 +60,9 @@ class MinimalPublisher : public rclcpp::Node
       cv::imshow("DeepSortTracking", readFrame);
 			cv::waitKey(10);
 
+      cv::destroyAllWindows();
+     
+
       //(memcpy(&img_msg_compressed.data[0], currentFrame.data, compressed_size);
      
       RCLCPP_INFO(this->get_logger(), "rdy!");
