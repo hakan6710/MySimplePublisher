@@ -14,7 +14,6 @@ find_package(rclcpp REQUIRED)
 find_package(OpenCV REQUIRED )
 find_package(ament_index_cpp REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(tutorial_interfaces REQUIRED) 
 find_package(class_loader REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED )
@@ -46,7 +45,6 @@ ament_target_dependencies(my_publisher
 cv_bridge
 "rclcpp" 
 "std_msgs" 
-"tutorial_interfaces" 
 "adp_core_msgs"
 "class_loader"
 "rclcpp_components"
@@ -97,7 +95,6 @@ ament_target_dependencies(my_publisher2
 cv_bridge
 "rclcpp" 
 "std_msgs" 
-"tutorial_interfaces" 
 "adp_core_msgs"
 "class_loader"
 "rclcpp_components"
